@@ -292,10 +292,14 @@
     aspect-ratio: 1; border-radius: 20px;
     background: var(--surface);
     border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    padding: 14%;
+    position: relative;
   }
-  .case-item svg { width: 100%; height: 100%; }
+  /* svg positioned absolute, not sized via flex+percentage: a percentage-sized
+     replaced element inside an aspect-ratio box creates a circular dependency
+     that browsers resolve by forcing the box to the svg's own intrinsic ratio,
+     silently breaking the intended aspect-ratio. Absolute positioning removes
+     the child from that layout pass entirely. */
+  .case-item svg { position: absolute; inset: 14%; width: 72%; height: 72%; }
   @media (max-width: 520px) {
     .case-scene { padding: 20px; gap: 12px; grid-template-columns: repeat(3, 1fr); }
   }
@@ -368,10 +372,11 @@
   }
   .item-art {
     aspect-ratio: 4/3; background: var(--surface-2);
-    display: flex; align-items: center; justify-content: center; padding: 16%;
     position: relative;
   }
-  .item-art svg { width: 100%; height: 100%; }
+  /* see .case-item svg comment: absolute positioning avoids the aspect-ratio
+     + percentage-sized-replaced-element circular sizing bug */
+  .item-art svg { position: absolute; inset: 16%; width: 68%; height: 68%; }
   .stock-badge {
     position: absolute; top: 12px; left: 12px;
     font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em;
@@ -429,6 +434,7 @@
     border-radius: 24px; border: 1px solid var(--border); background: var(--surface-2);
     aspect-ratio: 6/5; position: relative; overflow: hidden;
   }
+  .map-art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
   /* ---------- FAQ ---------- */
   .faq-list { max-width: 760px; margin: 36px auto 0; display: flex; flex-direction: column; gap: 12px; }
@@ -703,14 +709,15 @@
     </symbol>
     <!-- Croissant -->
     <symbol id="ic-croissant" viewBox="0 0 100 100">
-      <path d="M14 62c8-30 30-38 42-34 10 3 8 12 0 14-18 5-24 18-16 30 4 6 2 10-4 10-16 0-28-8-22-20z" fill="var(--gold)"/>
-      <path d="M22 56c6-16 18-24 28-24M26 68c6-10 14-16 22-18" stroke="var(--surface)" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".55"/>
+      <path d="M16 60 C14 40 28 22 50 19 C68 17 82 26 83 37 C83 42 79 44 75 41 C68 35 58 33 49 37 C36 43 29 54 33 66 C36 75 32 81 24 79 C17 77 17 68 16 60 Z" fill="var(--gold)"/>
+      <path d="M26 55c4-14 15-24 28-27M30 66c4-11 13-19 24-23" stroke="var(--surface)" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".55"/>
     </symbol>
     <!-- Cinnamon roll -->
     <symbol id="ic-cinnroll" viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="34" fill="var(--gold)"/>
-      <path d="M50 50 C 50 34, 66 34, 66 50 C 66 62, 54 62, 54 52 C 54 45, 60 45, 60 50" fill="none" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" opacity=".8"/>
-      <path d="M20 40c6-4 14-4 18 2M18 60c6 4 14 4 18-2" stroke="var(--surface)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".5"/>
+      <path d="M50 30a20 20 0 1 1 -14 34" fill="none" stroke="var(--surface)" stroke-width="4.2" stroke-linecap="round" opacity=".85"/>
+      <path d="M50 39a11 11 0 1 1 -7.8 18.8" fill="none" stroke="var(--surface)" stroke-width="3.2" stroke-linecap="round" opacity=".7"/>
+      <circle cx="50" cy="50" r="2.6" fill="var(--surface)" opacity=".7"/>
     </symbol>
     <!-- Danish -->
     <symbol id="ic-danish" viewBox="0 0 100 100">
